@@ -1,0 +1,44 @@
+{
+  "debit": [
+    "Bills & Utilities",
+    "Food & Groceries",
+    "Transport & Travel",
+    "Health & Personal Care",
+    "Discretionary",
+    "Shopping & Tech",
+    "Education & Learning",
+    "Savings & Investments",
+
+    "Debt Repayment",
+    "EMI",
+    "Loan Payment",
+
+    "Money Lent",
+    
+
+    "Transfers",
+    "Contributions",
+    "Miscellaneous"
+  ],
+
+  "credit": [
+    "Primary Income",
+    "Secondary Income",
+    "Investment Returns",
+    "Repayment Received",
+
+    "Credit & Debt",
+    "Borrowed Money",
+
+    "Other Income"
+  ],
+
+  "paymentInstrument": [
+    "Cash",
+    "Bank Account",
+    "UPI / Wallet",
+
+    "Credit Line",
+    "Credit Card"
+  ]
+}
