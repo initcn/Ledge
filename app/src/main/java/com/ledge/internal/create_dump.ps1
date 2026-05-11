@@ -25,4 +25,4 @@ Get-ChildItem $projectPath -Recurse -Include $ext -File | ForEach-Object {
     }
 }
 
-Write-Host "Done -> $outputFile"
+Write-Host "Dump Created -> $outputFile"
