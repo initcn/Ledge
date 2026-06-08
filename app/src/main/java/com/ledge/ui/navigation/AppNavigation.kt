@@ -1,6 +1,5 @@
 package com.ledge.ui.navigation
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,94 +14,52 @@ import com.ledge.ui.settings.SettingsScreen
 
 @Composable
 fun AppNavigation() {
-
-    val navController =
-        rememberNavController()
+    val navController = rememberNavController()
 
     Scaffold(
-
         bottomBar = {
-
-            BottomBar(
-                navController
-            )
+            BottomBar(navController = navController)
         }
-
-    ) { paddingValues ->
+    ) { paddingValues -> // 🔔 This tracks the exact layout area around your floating menu bar
 
         NavHost(
-
-            navController =
-                navController,
-
-            startDestination =
-                Routes.Dashboard.route,
-
+            navController = navController,
+            startDestination = Routes.Dashboard.route,
             modifier = Modifier
-                .padding(paddingValues)
+            // 🔔 REMOVED global padding here so that the screen background runs edge-to-edge
+            // behind the transparent margins of your floating bottom nav bar.
         ) {
-
-            composable(
-                route =
-                    Routes.Dashboard.route
-            ) {
-
-                DashboardScreen()
+            composable(route = Routes.Dashboard.route) {
+                // 🔔 Forwarding paddingValues directly down into the Screen content
+                DashboardScreen(paddingValues = paddingValues)
             }
 
-            composable(
-                route =
-                    Routes.Transactions.route
-            ) {
-
-                com.ledge.ui.transactions.TransactionsScreen()
+            composable(route = Routes.Transactions.route) {
+                com.ledge.ui.transactions.TransactionsScreen(paddingValues = paddingValues)
             }
 
-            composable(
-                route =
-                    Routes.Add.route
-            ) {
-
+            composable(route = Routes.Add.route) {
                 com.ledge.ui.add.AddTransactionScreen()
             }
 
-            composable(
-                route =
-                    Routes.Reports.route
-            ) {
-
-                ReportsScreen()
+            composable(route = Routes.Reports.route) {
+                // 🔔 Forwarding paddingValues to your Reports tab list container
+                ReportsScreen(paddingValues = paddingValues)
             }
 
-            composable(
-
-                route = "search"
-
-            ) {
-
+            composable(route = "search") {
                 SearchScreen()
             }
 
-            composable(
-                route =
-                    Routes.Settings.route
-            ) {
-
+            composable(route = Routes.Settings.route) {
                 SettingsScreen(
-
                     onOpenBudgetSettings = {
-
-                        navController.navigate(
-                            Routes.Budget.route
-                        )
+                        navController.navigate(Routes.Budget.route)
                     }
                 )
             }
 
-            composable(
-                route = Routes.Budget.route
-            ) {
-
+            composable(route = Routes.Budget.route) {
                 com.ledge.ui.budget.BudgetScreen()
             }
         }

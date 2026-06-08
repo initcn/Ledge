@@ -1,12 +1,13 @@
 package com.ledge.ui.reports
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledge.domain.PeriodFilter
 import com.ledge.core.TransactionType
 import com.ledge.data.entity.TransactionEntity
-import com.ledge.domain.CategoryProvider         // <-- FIXED IMPORT
-import com.ledge.domain.GetReportsDataUseCase     // <-- FIXED IMPORT
+import com.ledge.domain.CategoryProvider
+import com.ledge.domain.GetReportsDataUseCase
 import com.ledge.domain.ReportsData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,8 +19,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
-// ... Rest of your unified ViewModel code stays exactly the same
-// DEFRAGMENTED CONTENT: Merged from ReportsUiState.kt
+@Immutable
 data class ReportsUiState(
     val selectedType: TransactionType? = null,
     val selectedCategories: Set<String> = emptySet(),
@@ -36,7 +36,6 @@ class ReportsViewModel @Inject constructor(
     private val getReportsDataUseCase: GetReportsDataUseCase,
     categoryProvider: CategoryProvider
 ) : ViewModel() {
-
     val categories = categoryProvider.getCategories()
 
     private val _uiState = MutableStateFlow(ReportsUiState())

@@ -27,6 +27,7 @@ import com.ledge.ui.settings.SettingsViewModel
 
 @Composable
 fun ReportsScreen(
+    paddingValues: PaddingValues,
     viewModel: ReportsViewModel = hiltViewModel(),
     settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
@@ -70,12 +71,13 @@ fun ReportsScreen(
     UI LAYOUT
     ---------------------------------------------------
     */
-    LedgeScaffold { paddingValues ->
+    LedgeScaffold { _ ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
-            contentPadding = PaddingValues(16.dp),
+                .padding(paddingValues) // ✅ FIX: Safely handles top status bar bounds to match Dashboard/Transactions layout
+                .padding(horizontal = 16.dp), // ✅ Aligns screen margins consistently
+            contentPadding = PaddingValues(vertical = 16.dp), // ✅ Balanced list spacing
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             // SCREEN TITLE

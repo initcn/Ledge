@@ -2,6 +2,7 @@ package com.ledge
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -21,104 +22,55 @@ class MainActivity : FragmentActivity() {
     @Inject
     lateinit var preferences: SettingsPreferences
 
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launch {
-
-            val biometricEnabled =
-
-                preferences
-                    .biometricLock
-                    .first()
+            val biometricEnabled = preferences.biometricLock.first()
 
             if (biometricEnabled) {
-
                 showBiometricPrompt()
-
             } else {
-
                 launchApp()
             }
         }
     }
 
     private fun launchApp() {
+        // 🔔 FORCES THE WINDOW EDGE TO EDGE SPEC SYSTEM-WIDE
+        // This forces One UI to ignore fallback background layout bands and draw full screen
+        enableEdgeToEdge()
 
         setContent {
-
             LedgeTheme {
-
                 AppNavigation()
             }
         }
     }
 
     private fun showBiometricPrompt() {
+        val executor = ContextCompat.getMainExecutor(this)
 
-        val executor =
-
-            ContextCompat
-                .getMainExecutor(this)
-
-        val biometricPrompt =
-
-            BiometricPrompt(
-
-                this,
-
-                executor,
-
-                object :
-                    BiometricPrompt.AuthenticationCallback() {
-
-                    override fun onAuthenticationSucceeded(
-
-                        result:
-                        BiometricPrompt.AuthenticationResult
-                    ) {
-
-                        super.onAuthenticationSucceeded(
-                            result
-                        )
-
-                        launchApp()
-                    }
+        val biometricPrompt = BiometricPrompt(
+            this,
+            executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    launchApp()
                 }
-            )
-
-        val promptInfo =
-
-            BiometricPrompt
-                .PromptInfo
-                .Builder()
-
-                .setTitle(
-                    "Unlock Ledge"
-                )
-
-                .setSubtitle(
-                    "Authenticate to continue"
-                )
-
-                .setAllowedAuthenticators(
-
-                    BiometricManager
-                        .Authenticators
-                        .BIOMETRIC_STRONG or
-
-                            BiometricManager
-                                .Authenticators
-                                .DEVICE_CREDENTIAL
-                )
-
-                .build()
-
-        biometricPrompt.authenticate(
-            promptInfo
+            }
         )
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Unlock Ledge")
+            .setSubtitle("Authenticate to continue")
+            .setAllowedAuthenticators(
+                BiometricManager.Authenticators.BIOMETRIC_STRONG or
+                        BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            )
+            .build()
+
+        biometricPrompt.authenticate(promptInfo)
     }
 }

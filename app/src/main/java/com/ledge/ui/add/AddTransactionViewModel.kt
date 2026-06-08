@@ -1,11 +1,12 @@
 package com.ledge.ui.add
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledge.core.TransactionType
 import com.ledge.data.repository.TransactionRepository
 import com.ledge.domain.CategoryProvider
-import com.ledge.domain.TransactionFactory // <-- ADD THIS CRITICAL IMPORT
+import com.ledge.domain.TransactionFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// DEFRAGMENTED CONTENT: Merged directly out of AddTransactionUiState.kt
+@Immutable
 data class AddTransactionUiState(
     val type: TransactionType = TransactionType.DEBIT,
     val amount: String = "",
@@ -33,6 +34,7 @@ class AddTransactionViewModel @Inject constructor(
     private val categoryProvider: CategoryProvider,
     private val transactionFactory: TransactionFactory
 ) : ViewModel() {
+    // ... Keep your existing ViewModel implementation exactly identical below this line
 
     val categories = categoryProvider.getCategories()
 

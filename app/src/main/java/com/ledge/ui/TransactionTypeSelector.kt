@@ -1,4 +1,4 @@
-package com.ledge.ui.add
+package com.ledge.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

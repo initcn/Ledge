@@ -1,6 +1,7 @@
 package com.ledge.ui.transactions
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,6 +27,7 @@ import com.ledge.ui.settings.SettingsViewModel
 
 @Composable
 fun TransactionsScreen(
+    paddingValues: PaddingValues, // 🔔 UPDATED: Receives floating navigation padding instructions from parent AppNavigation
     viewModel: TransactionsViewModel = hiltViewModel(),
     settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
@@ -36,12 +38,12 @@ fun TransactionsScreen(
     val currency = settingsUiState.currency
 
     // CENTRALIZED SCAFFOLDING - Enforcing unified background and snackbar tracking
-    LedgeScaffold { paddingValues ->
+    LedgeScaffold { _ -> // 🔔 UPDATED: Ignore internal padding since we pass top-level navigation constraints directly
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp),
+                .padding(paddingValues) // 🔔 UPDATED: Ensures last items can scroll clear of the floating bar boundary
+                .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {

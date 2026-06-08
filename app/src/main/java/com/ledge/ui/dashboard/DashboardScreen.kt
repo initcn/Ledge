@@ -1,6 +1,7 @@
 package com.ledge.ui.dashboard
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,6 +26,7 @@ import com.ledge.ui.settings.SettingsViewModel
 
 @Composable
 fun DashboardScreen(
+    paddingValues: PaddingValues,
     viewModel: DashboardViewModel = hiltViewModel(),
     budgetViewModel: BudgetViewModel = hiltViewModel(),
     settingsViewModel: SettingsViewModel = hiltViewModel()
@@ -41,13 +43,13 @@ fun DashboardScreen(
         buildDashboardPeriodText(periodFilter)
     }
 
-    // CENTRALIZED SCAFFOLDING - Standardized screen container [cite: 467]
-    LedgeScaffold { paddingValues ->
+    // CENTRALIZED SCAFFOLDING - Standardized screen container
+    LedgeScaffold { _ ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
+                .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             item {
@@ -67,7 +69,7 @@ fun DashboardScreen(
                 }
             }
 
-            // SUMMARY CARDS SECTION [cite: 471]
+            // SUMMARY CARDS SECTION
             dashboardSummarySection(
                 dashboardData = dashboardData,
                 budgets = budgets,
@@ -75,7 +77,7 @@ fun DashboardScreen(
                 currency = currency
             )
 
-            // RECENT TRANSACTIONS SECTION [cite: 472]
+            // RECENT TRANSACTIONS SECTION
             recentTransactionsSection(
                 transactions = dashboardData?.recentTransactions ?: emptyList()
             )

@@ -1,5 +1,6 @@
 package com.ledge.ui.transactions
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// DEFRAGMENTED CONTENT: Merged from TransactionsUiState.kt
+@Immutable
 data class TransactionsUiState(
     val transactions: List<TransactionEntity> = emptyList(),
     val selectedTransaction: TransactionEntity? = null,

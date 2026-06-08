@@ -32,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ledge.core.LedgeTextFormatter
 import com.ledge.core.TransactionType
 import com.ledge.core.DatePickerHelper
+import com.ledge.ui.TransactionTypeSelector
 import com.ledge.ui.components.core.LedgeScaffold
 import com.ledge.ui.components.core.LedgeScreenTitle
 import com.ledge.ui.components.input.LedgeDropdownField
