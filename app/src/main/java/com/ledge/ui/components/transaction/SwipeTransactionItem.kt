@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.ledge.core.extensions.toRowData
-import com.ledge.core.model.CurrencyType
+import com.ledge.core.toRowData
+import com.ledge.core.CurrencyType
 import com.ledge.data.entity.TransactionEntity
 import com.ledge.ui.components.cards.TransactionCard
 import com.ledge.ui.theme.LedgeTheme

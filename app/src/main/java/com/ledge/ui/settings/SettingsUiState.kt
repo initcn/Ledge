@@ -1,6 +1,6 @@
 package com.ledge.ui.settings
 
-import com.ledge.core.model.CurrencyType
+import com.ledge.core.CurrencyType
 
 data class SettingsUiState(
 

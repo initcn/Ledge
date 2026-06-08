@@ -1,7 +1,7 @@
 package com.ledge.data.database
 
 import androidx.room.TypeConverter
-import com.ledge.core.model.TransactionType
+import com.ledge.core.TransactionType
 
 class Converters {
 

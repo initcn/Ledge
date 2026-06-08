@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
-import com.ledge.core.model.CurrencyType
+import com.ledge.core.CurrencyType
 
 import com.ledge.data.backup.BackupManager
 import com.ledge.data.preferences.SettingsPreferences

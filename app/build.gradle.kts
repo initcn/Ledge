@@ -13,7 +13,7 @@ android {
 
     namespace = "com.ledge"
 
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
 
@@ -21,7 +21,7 @@ android {
 
         minSdk = 29
 
-        targetSdk = 36
+        targetSdk = 37
 
         versionCode = 1
 

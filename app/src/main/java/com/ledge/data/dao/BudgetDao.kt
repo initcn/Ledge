@@ -8,7 +8,6 @@ import androidx.room.Query
 import androidx.room.Update
 
 import com.ledge.data.entity.BudgetEntity
-import com.ledge.data.model.DashboardTotals
 
 import kotlinx.coroutines.flow.Flow
 

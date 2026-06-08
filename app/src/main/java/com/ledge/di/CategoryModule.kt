@@ -1,15 +1,11 @@
 package com.ledge.di
 
 import com.ledge.data.provider.AssetCategoryProvider
-
-import com.ledge.domain.category.CategoryProvider
-
+import com.ledge.domain.CategoryProvider // <-- FIXED IMPORT
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-
 import dagger.hilt.components.SingletonComponent
-
 import javax.inject.Singleton
 
 @Module
@@ -19,8 +15,6 @@ abstract class CategoryModule {
     @Binds
     @Singleton
     abstract fun bindCategoryProvider(
-
         provider: AssetCategoryProvider
-
     ): CategoryProvider
 }

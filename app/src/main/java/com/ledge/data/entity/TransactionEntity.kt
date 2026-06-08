@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-import com.ledge.core.model.TransactionType
+import com.ledge.core.TransactionType
 
 @Entity(
 

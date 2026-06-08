@@ -19,10 +19,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 
-import com.ledge.core.model.DashboardPeriod
-import com.ledge.core.model.PeriodFilter
+import com.ledge.core.DashboardPeriod
+import com.ledge.domain.PeriodFilter
 
-import com.ledge.core.utils.date.DatePickerHelper
+import com.ledge.core.DatePickerHelper
 
 import com.ledge.ui.components.core.LedgeScreenTitle
 
