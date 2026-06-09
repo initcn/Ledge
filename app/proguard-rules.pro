@@ -5,34 +5,43 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
-# Keep Gson model classes
--keep class com.ledge.data.entity.** { *; }
+-renamesourcefileattribute SourceFile
 
-# Keep Gson generic type info
--keepattributes Signature
+# ====================================================================
+# TARGETED SERIALIZATION RULES (GSON & ROOM ENTITIES)
+# ====================================================================
 
-# Keep Gson annotations
--keepattributes *Annotation*
+# Keep generic type signatures and annotations required by Gson reflection
+-keepattributes Signature, *Annotation*, EnclosingMethod, InnerClasses
 
-# Gson itself
--keep class com.google.gson.** { *; }
+# Target only the fields that Gson actually reads and writes via reflection.
+# Instead of keeping entire classes, methods, and constructors (*;),
+# this keeps only the fields within your data entities.
+-keepclassmembers class app.initcn.ledge.data.entity.** {
+    @com.google.gson.annotations.SerializedName <fields>;
+    private <fields>;
+    protected <fields>;
+    public <fields>;
+}
 
-# Prevent enum obfuscation
--keepclassmembers enum * {
+# Keep the parameterless constructor for Room/Gson entity instantiation
+# without locking down all other class members.
+-keepclassmembers class app.initcn.ledge.data.entity.** {
+    <init>();
+}
+
+# ====================================================================
+# SYSTEM & FRAMEWORK REFINEMENTS
+# ====================================================================
+
+# Prevent enum name obfuscation strictly for enums matching serialization logic
+-keepclassmembers enum app.initcn.ledge.core.** {
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }

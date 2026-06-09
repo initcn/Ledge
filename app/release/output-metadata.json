@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.ledge",
+  "applicationId": "app.initcn.ledge",
   "variantName": "release",
   "elements": [
     {

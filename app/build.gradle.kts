@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ledge"
+    namespace = "app.initcn.ledge"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.ledge"
+        applicationId = "app.initcn.ledge"
         minSdk = 29
         targetSdk = 37
         versionCode = 1
@@ -26,7 +26,6 @@ android {
         }
         debug {
             isMinifyEnabled = false
-            isShrinkResources = false
         }
     }
 
@@ -34,6 +33,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
 
     buildFeatures {
         compose = true
