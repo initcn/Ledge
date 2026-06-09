@@ -1,8 +1,8 @@
-package com.ledge.ui.dashboard // <-- FIXED ROOT PACKAGE HEADER
+package com.ledge.ui.dashboard
 
 import androidx.compose.foundation.lazy.LazyListScope
-import com.ledge.core.LedgeTextFormatter // <-- FIXED IMPORT
 import com.ledge.core.CurrencyType
+import com.ledge.core.LedgeTextFormatter
 import com.ledge.data.repository.BudgetProgress
 import com.ledge.domain.DashboardData
 import com.ledge.ui.components.cards.BalanceCard

@@ -29,9 +29,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ledge.core.DatePickerHelper
 import com.ledge.core.LedgeTextFormatter
 import com.ledge.core.TransactionType
-import com.ledge.core.DatePickerHelper
 import com.ledge.ui.TransactionTypeSelector
 import com.ledge.ui.components.core.LedgeScaffold
 import com.ledge.ui.components.core.LedgeScreenTitle
@@ -48,11 +48,7 @@ fun AddTransactionScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
 
-    /*
-    ---------------------------------------------------
-    CATEGORY DATA
-    ---------------------------------------------------
-    */
+    // CATEGORY DATA
     val categoryData = viewModel.categories
     val debitCategories = categoryData.debit
     val creditCategories = categoryData.credit
@@ -64,20 +60,13 @@ fun AddTransactionScreen(
     }
     val paymentInstruments = categoryData.paymentInstrument
 
-    /*
-    ---------------------------------------------------
-    SAFETY
-    ---------------------------------------------------
-    */
+
+    // SAFETY
     if (debitCategories.isEmpty() || creditCategories.isEmpty() || paymentInstruments.isEmpty()) {
         return
     }
 
-    /*
-    ---------------------------------------------------
-    SAVE SUCCESS & ERROR ONSCREEN NOTIFICATIONS
-    ---------------------------------------------------
-    */
+    // SAVE SUCCESS & ERROR ONSCREEN NOTIFICATIONS
     LaunchedEffect(uiState.isSaved) {
         if (uiState.isSaved) {
             snackBarHostState.showSnackbar("Transaction Saved")
@@ -92,11 +81,7 @@ fun AddTransactionScreen(
         }
     }
 
-    /*
-    ---------------------------------------------------
-    UI LAYOUT
-    ---------------------------------------------------
-    */
+    // UI LAYOUT
     LedgeScaffold(snackbarHostState = snackBarHostState) { paddingValues ->
         Column(
             modifier = Modifier

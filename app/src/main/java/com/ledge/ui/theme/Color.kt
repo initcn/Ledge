@@ -3,12 +3,7 @@ package com.ledge.ui.theme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.Color
 
-/*
----------------------------------------------------
-FINANCIAL COLORS
----------------------------------------------------
-*/
-
+// FINANCIAL COLORS
 val ColorScheme.income: Color
     get() = primary
 
@@ -24,12 +19,7 @@ val ColorScheme.success: Color
 val ColorScheme.warning: Color
     get() = tertiary
 
-/*
----------------------------------------------------
-SURFACES
----------------------------------------------------
-*/
-
+// SURFACES
 val ColorScheme.cardBackground: Color
     get() = surfaceContainer
 
@@ -39,33 +29,21 @@ val ColorScheme.cardBackgroundElevated: Color
 val ColorScheme.inputBackground: Color
     get() = surfaceContainerHighest
 
-/*
----------------------------------------------------
-TEXT
----------------------------------------------------
-*/
 
+// TEXT
 val ColorScheme.textPrimary: Color
     get() = onSurface
 
 val ColorScheme.textSecondary: Color
     get() = onSurfaceVariant
 
-/*
----------------------------------------------------
-BORDERS
----------------------------------------------------
-*/
 
+// BORDERS
 val ColorScheme.borderSubtle: Color
     get() = outlineVariant
 
-/*
----------------------------------------------------
-CHARTS
----------------------------------------------------
-*/
 
+// CHARTS
 val ColorScheme.chartPositive: Color
     get() = primary
 

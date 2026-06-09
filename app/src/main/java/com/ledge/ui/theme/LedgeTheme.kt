@@ -16,12 +16,10 @@ val LocalLedgeSurfaces =
 object LedgeTheme {
 
     val colors: ColorScheme
-
         @Composable
         get() = MaterialTheme.colorScheme
 
     val surfaces: LedgeSurfaces
-
         @Composable
         get() = LocalLedgeSurfaces.current
 }

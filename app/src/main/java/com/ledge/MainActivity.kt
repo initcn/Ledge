@@ -37,8 +37,6 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun launchApp() {
-        // 🔔 FORCES THE WINDOW EDGE TO EDGE SPEC SYSTEM-WIDE
-        // This forces One UI to ignore fallback background layout bands and draw full screen
         enableEdgeToEdge()
 
         setContent {

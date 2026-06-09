@@ -7,16 +7,10 @@ import java.time.LocalTime
 import java.time.ZoneId
 
 object DateUtils {
+    private val zoneId = ZoneId.systemDefault()
 
-    private val zoneId =
-        ZoneId.systemDefault()
 
-    /*
-    ---------------------------------------------------
-    START OF DAY
-    ---------------------------------------------------
-    */
-
+    // START OF DAY
     fun startOfDay(): Long {
 
         return LocalDate.now()
@@ -28,12 +22,7 @@ object DateUtils {
             .toEpochMilli()
     }
 
-    /*
-    ---------------------------------------------------
-    START OF WEEK
-    ---------------------------------------------------
-    */
-
+    // START OF WEEK
     fun startOfWeek(): Long {
 
         return LocalDate.now()
@@ -47,12 +36,7 @@ object DateUtils {
             .toEpochMilli()
     }
 
-    /*
-    ---------------------------------------------------
-    START OF MONTH
-    ---------------------------------------------------
-    */
-
+    // START OF MONTH
     fun startOfMonth(): Long {
 
         return LocalDate.now()
@@ -66,19 +50,13 @@ object DateUtils {
             .toEpochMilli()
     }
 
-    /*
-    ---------------------------------------------------
-    END OF MONTH
-    ---------------------------------------------------
-    */
-
+    // END OF MONTH
     fun endOfMonth(): Long {
 
         return LocalDate.now()
 
             .withDayOfMonth(
-                LocalDate.now()
-                    .lengthOfMonth()
+                LocalDate.now().lengthOfMonth()
             )
 
             .atTime(LocalTime.MAX)
@@ -90,48 +68,28 @@ object DateUtils {
             .toEpochMilli()
     }
 
-    /*
-    ---------------------------------------------------
-    CURRENT MONTH
-    ---------------------------------------------------
-    */
 
+    // CURRENT MONTH
     fun currentMonth(): Int {
 
-        return LocalDate.now()
-            .monthValue
+        return LocalDate.now().monthValue
     }
 
-    /*
-    ---------------------------------------------------
-    CURRENT YEAR
-    ---------------------------------------------------
-    */
 
+    // CURRENT YEAR
     fun currentYear(): Int {
 
-        return LocalDate.now()
-            .year
+        return LocalDate.now().year
     }
 
-    /*
-    ---------------------------------------------------
-    NOW
-    ---------------------------------------------------
-    */
-
+    // NOW
     fun now(): Long {
 
-        return Instant.now()
-            .toEpochMilli()
+        return Instant.now().toEpochMilli()
     }
 
-    /*
-    ---------------------------------------------------
-    TODAY
-    ---------------------------------------------------
-    */
 
+    // TODAY
     fun today(): LocalDate {
 
         return LocalDate.now()

@@ -1,4 +1,4 @@
-package com.ledge.ui.dashboard.components
+package com.ledge.ui.dashboard
 
 import androidx.compose.foundation.layout.padding
 

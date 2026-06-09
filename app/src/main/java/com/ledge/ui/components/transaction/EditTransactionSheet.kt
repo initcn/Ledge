@@ -31,7 +31,7 @@ fun EditTransactionSheet(
     val sheetState = rememberModalBottomSheetState()
 
     var amount by remember {
-        mutableStateOf(transaction.amount.toString())
+        mutableStateOf((transaction.amount / 100.0).toString().removeSuffix(".0"))
     }
 
     var note by remember {

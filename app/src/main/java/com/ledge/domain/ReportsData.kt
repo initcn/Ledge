@@ -1,4 +1,4 @@
-package com.ledge.domain // <-- FLAT ROOT PACKAGE HEADER
+package com.ledge.domain
 
 import androidx.compose.runtime.Immutable
 import com.ledge.data.entity.TransactionEntity

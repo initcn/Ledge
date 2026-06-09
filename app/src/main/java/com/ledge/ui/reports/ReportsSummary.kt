@@ -1,4 +1,4 @@
-package com.ledge.ui.reports // <-- FIXED ROOT PACKAGE HEADER
+package com.ledge.ui.reports
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ledge.core.LedgeTextFormatter // <-- FIXED IMPORT
 import com.ledge.core.CurrencyType
+import com.ledge.core.LedgeTextFormatter
 import com.ledge.ui.components.core.LedgeCard
 import com.ledge.ui.theme.expense
 import com.ledge.ui.theme.income
@@ -41,22 +41,41 @@ fun ReportsSummary(
             )
 
             Text(
-                text = "Period: ${LedgeTextFormatter.formatAbsoluteDate(fromDate)} → ${LedgeTextFormatter.formatAbsoluteDate(toDate)}",
+                text = "Period: ${LedgeTextFormatter.formatAbsoluteDate(fromDate)} → ${
+                    LedgeTextFormatter.formatAbsoluteDate(
+                        toDate
+                    )
+                }",
                 color = MaterialTheme.colorScheme.textSecondary
             )
 
             Text(
-                text = "Total Credit: ${LedgeTextFormatter.formatCurrency(amount = totalCredit, currency = currency)}",
+                text = "Total Credit: ${
+                    LedgeTextFormatter.formatCurrency(
+                        amount = totalCredit,
+                        currency = currency
+                    )
+                }",
                 color = MaterialTheme.colorScheme.income
             )
 
             Text(
-                text = "Total Debit: ${LedgeTextFormatter.formatCurrency(amount = totalDebit, currency = currency)}",
+                text = "Total Debit: ${
+                    LedgeTextFormatter.formatCurrency(
+                        amount = totalDebit,
+                        currency = currency
+                    )
+                }",
                 color = MaterialTheme.colorScheme.expense
             )
 
             Text(
-                text = "Balance: ${LedgeTextFormatter.formatCurrency(amount = balance, currency = currency)}",
+                text = "Balance: ${
+                    LedgeTextFormatter.formatCurrency(
+                        amount = balance,
+                        currency = currency
+                    )
+                }",
                 style = MaterialTheme.typography.headlineSmall
             )
         }

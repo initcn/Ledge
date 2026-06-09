@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.ledge.data.entity.BudgetEntity
 import com.ledge.data.repository.BudgetProgress
 import com.ledge.data.repository.BudgetRepository
-import com.ledge.domain.CategoryProvider   // <-- FIXED IMPORT
-import com.ledge.domain.AmountValidator    // <-- FIXED IMPORT
+import com.ledge.domain.AmountValidator
+import com.ledge.domain.CategoryProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

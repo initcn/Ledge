@@ -2,10 +2,10 @@ package com.ledge.ui.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ledge.domain.PeriodFilter
 import com.ledge.data.entity.CategoryTotal
 import com.ledge.data.entity.TransactionEntity
-import com.ledge.domain.GetDashboardDataUseCase // <-- ADD THIS CRITICAL IMPORT
+import com.ledge.domain.GetDashboardDataUseCase
+import com.ledge.domain.PeriodFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,9 +15,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
-// ... rest of the file remains exactly the same
-// ... Rest of your unified ViewModel code stays exactly the same
-// DEFRAGMENTED CONTENT: Merged from DashboardUiState.kt
 data class DashboardUiState(
     val totalIncome: Long = 0L,
     val totalExpense: Long = 0L,

@@ -99,9 +99,8 @@ fun LedgeTheme(
         MaterialTheme(
 
             colorScheme = colorScheme,
-
             typography = Typography,
-
+            shapes = LedgeShapes,
             content = content
         )
     }

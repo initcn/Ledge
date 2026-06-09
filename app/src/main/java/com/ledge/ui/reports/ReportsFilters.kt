@@ -26,8 +26,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.ledge.core.DashboardPeriod
-import com.ledge.core.TransactionType
 import com.ledge.core.DatePickerHelper
+import com.ledge.core.TransactionType
 import com.ledge.domain.PeriodFilter
 import com.ledge.ui.components.core.LedgeCard
 import com.ledge.ui.components.filter.LedgeFilterChip
@@ -47,7 +47,8 @@ fun ReportsFilters(
     onCategoryToggle: (String) -> Unit,
     onPeriodSelected: (PeriodFilter) -> Unit
 ) {
-    val context = LocalContext.current // 🔔 Correctly grabs the Android Context for the DatePickerDialog
+    val context =
+        LocalContext.current // 🔔 Correctly grabs the Android Context for the DatePickerDialog
     var isCategoryTrayExpanded by remember { mutableStateOf(false) }
 
     val categorySummaryText = remember(selectedCategories, currentCategories) {

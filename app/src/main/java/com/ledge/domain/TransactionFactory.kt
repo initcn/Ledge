@@ -1,4 +1,4 @@
-package com.ledge.domain // <-- UPDATED FLAT ROOT PACKAGE
+package com.ledge.domain
 
 import com.ledge.core.TransactionType
 import com.ledge.data.entity.TransactionEntity
@@ -7,11 +7,7 @@ import javax.inject.Inject
 
 class TransactionFactory @Inject constructor() {
 
-    /*
-    ---------------------------------------------------
-    CREATE
-    ---------------------------------------------------
-    */
+    // CREATE
     fun create(
         type: TransactionType,
         amount: Long,
@@ -30,11 +26,8 @@ class TransactionFactory @Inject constructor() {
         )
     }
 
-    /*
-    ---------------------------------------------------
-    CREATE SAFE
-    ---------------------------------------------------
-    */
+
+    // CREATE SAFE
     fun createOrNull(
         type: TransactionType,
         amount: String,

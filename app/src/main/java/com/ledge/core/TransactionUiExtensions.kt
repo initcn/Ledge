@@ -5,15 +5,13 @@ import com.ledge.ui.components.model.TransactionRowData
 
 fun TransactionEntity.toRowData(currency: CurrencyType): TransactionRowData {
     return TransactionRowData(
-        title = category,
-        subtitle = mode,
-        note = note,
+        title = this.category,
+        subtitle = this.mode,
         formattedAmount = LedgeTextFormatter.formatTransactionAmount(
-            type = type,
-            amount = amount,
-            currency = currency
+            type = this.type, amount = this.amount, currency = currency
         ),
-        formattedDate = LedgeTextFormatter.formatRelativeDate(createdAt),
-        isExpense = type == TransactionType.DEBIT
+        formattedDate = LedgeTextFormatter.formatRelativeDate(this.createdAt),
+        isExpense = this.type == TransactionType.DEBIT,
+        note = this.note
     )
 }

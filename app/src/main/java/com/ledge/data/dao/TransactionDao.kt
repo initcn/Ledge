@@ -42,13 +42,15 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE createdAt BETWEEN :startDate AND :endDate ORDER BY createdAt DESC")
     fun getTransactionsForPeriod(startDate: Long, endDate: Long): Flow<List<TransactionEntity>>
 
-    @Query("""
+    @Query(
+        """
         SELECT * FROM transactions
         WHERE createdAt BETWEEN :startDate AND :endDate
         AND (:type IS NULL OR type = :type)
         AND (:categoriesSize = 0 OR category IN (:categories))
         ORDER BY createdAt DESC
-    """)
+    """
+    )
     fun getFilteredTransactionsForPeriodAndCategories(
         startDate: Long,
         endDate: Long,
@@ -61,43 +63,55 @@ interface TransactionDao {
     fun getRecentTransactions(): Flow<List<TransactionEntity>>
 
     @Query("SELECT * FROM transactions WHERE createdAt BETWEEN :startDate AND :endDate ORDER BY createdAt DESC LIMIT 5")
-    fun getRecentTransactionsForPeriod(startDate: Long, endDate: Long): Flow<List<TransactionEntity>>
+    fun getRecentTransactionsForPeriod(
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<TransactionEntity>>
 
-    @Query("""
+    @Query(
+        """
         SELECT type, category, SUM(amount) as totalAmount 
         FROM transactions 
         GROUP BY type, category
-    """)
+    """
+    )
     fun observeRawGroupTotals(): Flow<List<DbGroupTotal>>
 
-    @Query("""
+    @Query(
+        """
         SELECT type, category, SUM(amount) as totalAmount 
         FROM transactions 
         WHERE createdAt BETWEEN :startDate AND :endDate
         GROUP BY type, category
-    """)
+    """
+    )
     fun observeRawGroupTotalsForPeriod(startDate: Long, endDate: Long): Flow<List<DbGroupTotal>>
 
-    @Query("""
+    @Query(
+        """
         SELECT category, SUM(amount) AS total 
         FROM transactions 
         WHERE type = 'DEBIT' 
         GROUP BY category 
         ORDER BY total DESC
-    """)
+    """
+    )
     fun observeExpenseByCategory(): Flow<List<CategoryTotal>>
 
-    @Query("""
+    @Query(
+        """
         SELECT category, SUM(amount) AS total 
         FROM transactions 
         WHERE type = 'DEBIT' AND createdAt BETWEEN :startDate AND :endDate
         GROUP BY category 
         ORDER BY total DESC
-    """)
+    """
+    )
     fun observeExpenseByCategoryForPeriod(startDate: Long, endDate: Long): Flow<List<CategoryTotal>>
 
     // UPDATED TO RETURN THE LOCAL DB DATA CLASS
-    @Query("""
+    @Query(
+        """
         SELECT 
             COALESCE(SUM(CASE WHEN type = 'CREDIT' THEN amount ELSE 0 END), 0) AS totalCredit,
             COALESCE(SUM(CASE WHEN type = 'DEBIT' THEN amount ELSE 0 END), 0) AS totalDebit
@@ -105,7 +119,8 @@ interface TransactionDao {
         WHERE createdAt BETWEEN :startDate AND :endDate
         AND (:type IS NULL OR type = :type)
         AND (:categoriesSize = 0 OR category IN (:categories))
-    """)
+    """
+    )
     fun observeReportsTotals(
         startDate: Long,
         endDate: Long,
@@ -126,10 +141,12 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions ORDER BY createdAt DESC")
     fun getPagedTransactions(): PagingSource<Int, TransactionEntity>
 
-    @Query("""
+    @Query(
+        """
         SELECT * FROM transactions
         WHERE (note LIKE '%' || :query || '%' OR category LIKE '%' || :query || '%' OR mode LIKE '%' || :query || '%')
         ORDER BY createdAt DESC
-    """)
+    """
+    )
     fun searchPagedTransactions(query: String): PagingSource<Int, TransactionEntity>
 }

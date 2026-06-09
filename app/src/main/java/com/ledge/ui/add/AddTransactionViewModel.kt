@@ -34,8 +34,6 @@ class AddTransactionViewModel @Inject constructor(
     private val categoryProvider: CategoryProvider,
     private val transactionFactory: TransactionFactory
 ) : ViewModel() {
-    // ... Keep your existing ViewModel implementation exactly identical below this line
-
     val categories = categoryProvider.getCategories()
 
     private val _uiState = MutableStateFlow(AddTransactionUiState())

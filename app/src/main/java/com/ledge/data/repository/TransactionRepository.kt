@@ -52,13 +52,18 @@ class TransactionRepository @Inject constructor(
         )
     }
 
-    fun getRecentTransactions(): Flow<List<TransactionEntity>> = transactionDao.getRecentTransactions()
+    fun getRecentTransactions(): Flow<List<TransactionEntity>> =
+        transactionDao.getRecentTransactions()
 
-    fun getRecentTransactionsForPeriod(startDate: Long, endDate: Long): Flow<List<TransactionEntity>> {
+    fun getRecentTransactionsForPeriod(
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<TransactionEntity>> {
         return transactionDao.getRecentTransactionsForPeriod(startDate, endDate)
     }
 
-    fun getExpenseByCategory(): Flow<List<CategoryTotal>> = transactionDao.observeExpenseByCategory()
+    fun getExpenseByCategory(): Flow<List<CategoryTotal>> =
+        transactionDao.observeExpenseByCategory()
 
     fun getExpenseByCategoryForPeriod(startDate: Long, endDate: Long): Flow<List<CategoryTotal>> {
         return transactionDao.observeExpenseByCategoryForPeriod(startDate, endDate)
@@ -97,7 +102,10 @@ class TransactionRepository @Inject constructor(
 
             // 3. Borrowed Money Tracking
             if ((isCredit && FinancialRules.isBorrowedMoney(item.category)) ||
-                (isDebit && FinancialRules.isCreditMode(item.category) && !FinancialRules.isDebtPayment(item.category))) {
+                (isDebit && FinancialRules.isCreditMode(item.category) && !FinancialRules.isDebtPayment(
+                    item.category
+                ))
+            ) {
                 borrowed += item.totalAmount
             }
 
@@ -141,7 +149,8 @@ class TransactionRepository @Inject constructor(
     }
 
     fun observeDashboardSummaryForPeriod(startDate: Long, endDate: Long): Flow<DashboardSummary> {
-        return transactionDao.observeRawGroupTotalsForPeriod(startDate, endDate).map { calculateSummary(it) }
+        return transactionDao.observeRawGroupTotalsForPeriod(startDate, endDate)
+            .map { calculateSummary(it) }
     }
 
     fun observeReportsTotals(
@@ -150,7 +159,13 @@ class TransactionRepository @Inject constructor(
         type: TransactionType?,
         categories: List<String>
     ): Flow<DbReportsTotals> {
-        return transactionDao.observeReportsTotals(startDate, endDate, type, categories, categories.size)
+        return transactionDao.observeReportsTotals(
+            startDate,
+            endDate,
+            type,
+            categories,
+            categories.size
+        )
     }
 
     fun observeBorrowedAmountForPeriod(startDate: Long, endDate: Long): Flow<Long> {
@@ -165,15 +180,20 @@ class TransactionRepository @Inject constructor(
         return observeDashboardSummaryForPeriod(startDate, endDate).map { it.outstandingDebt }
     }
 
-    suspend fun insertTransaction(transaction: TransactionEntity) = transactionDao.insertTransaction(transaction)
+    suspend fun insertTransaction(transaction: TransactionEntity) =
+        transactionDao.insertTransaction(transaction)
 
-    suspend fun updateTransaction(transaction: TransactionEntity) = transactionDao.updateTransaction(transaction)
+    suspend fun updateTransaction(transaction: TransactionEntity) =
+        transactionDao.updateTransaction(transaction)
 
-    suspend fun deleteTransaction(transactionId: Int) = transactionDao.deleteTransaction(transactionId)
+    suspend fun deleteTransaction(transactionId: Int) =
+        transactionDao.deleteTransaction(transactionId)
 
-    suspend fun getAllTransactionsList(): List<TransactionEntity> = transactionDao.getAllTransactionsList()
+    suspend fun getAllTransactionsList(): List<TransactionEntity> =
+        transactionDao.getAllTransactionsList()
 
-    suspend fun insertTransactions(transactions: List<TransactionEntity>) = transactionDao.insertTransactions(transactions)
+    suspend fun insertTransactions(transactions: List<TransactionEntity>) =
+        transactionDao.insertTransactions(transactions)
 
     suspend fun clearTransactions() = transactionDao.clearTransactions()
 

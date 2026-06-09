@@ -19,23 +19,15 @@ fun AppNavigation() {
     Scaffold(
         bottomBar = {
             BottomBar(navController = navController)
-        }
-    ) { paddingValues -> // 🔔 This tracks the exact layout area around your floating menu bar
+        }) { paddingValues ->
 
         NavHost(
             navController = navController,
             startDestination = Routes.Dashboard.route,
             modifier = Modifier
-            // 🔔 REMOVED global padding here so that the screen background runs edge-to-edge
-            // behind the transparent margins of your floating bottom nav bar.
         ) {
             composable(route = Routes.Dashboard.route) {
-                // 🔔 Forwarding paddingValues directly down into the Screen content
                 DashboardScreen(paddingValues = paddingValues)
-            }
-
-            composable(route = Routes.Transactions.route) {
-                com.ledge.ui.transactions.TransactionsScreen(paddingValues = paddingValues)
             }
 
             composable(route = Routes.Add.route) {
@@ -43,20 +35,18 @@ fun AppNavigation() {
             }
 
             composable(route = Routes.Reports.route) {
-                // 🔔 Forwarding paddingValues to your Reports tab list container
                 ReportsScreen(paddingValues = paddingValues)
             }
 
-            composable(route = "search") {
-                SearchScreen()
+            composable(route = Routes.Search.route) {
+                SearchScreen(paddingValues = paddingValues)
             }
 
             composable(route = Routes.Settings.route) {
                 SettingsScreen(
                     onOpenBudgetSettings = {
                         navController.navigate(Routes.Budget.route)
-                    }
-                )
+                    })
             }
 
             composable(route = Routes.Budget.route) {

@@ -1,4 +1,4 @@
-package com.ledge.domain // <-- FLAT ROOT PACKAGE HEADER
+package com.ledge.domain
 
 import com.ledge.core.TransactionType
 import com.ledge.data.repository.TransactionRepository

@@ -14,14 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ledge.core.LedgeTextFormatter
 import com.ledge.core.DashboardPeriod
-import com.ledge.domain.PeriodFilter
 import com.ledge.core.DateUtils
+import com.ledge.core.LedgeTextFormatter
+import com.ledge.domain.PeriodFilter
 import com.ledge.ui.budget.BudgetViewModel
 import com.ledge.ui.components.core.LedgeScaffold
-import com.ledge.ui.dashboard.components.DashboardHeader
-import com.ledge.ui.dashboard.components.recentTransactionsSection
 import com.ledge.ui.settings.SettingsViewModel
 
 @Composable
@@ -85,31 +83,43 @@ fun DashboardScreen(
     }
 }
 
-/*
----------------------------------------------------
-DEFRAGMENTED INLINE HELPERS
----------------------------------------------------
-*/
+
+// DEFRAGMENTED INLINE HELPERS
 private fun buildDashboardPeriodText(periodFilter: PeriodFilter): String? {
     return when (periodFilter.period) {
         DashboardPeriod.ALL -> null
         DashboardPeriod.DAY -> {
             "Today • ${LedgeTextFormatter.formatAbsoluteDate(System.currentTimeMillis())}"
         }
+
         DashboardPeriod.WEEK -> {
             val start = DateUtils.startOfWeek()
             val end = System.currentTimeMillis()
-            "Week • ${LedgeTextFormatter.formatAbsoluteDate(start)} → ${LedgeTextFormatter.formatAbsoluteDate(end)}"
+            "Week • ${LedgeTextFormatter.formatAbsoluteDate(start)} → ${
+                LedgeTextFormatter.formatAbsoluteDate(
+                    end
+                )
+            }"
         }
+
         DashboardPeriod.MONTH -> {
             val start = DateUtils.startOfMonth()
             val end = System.currentTimeMillis()
-            "Month • ${LedgeTextFormatter.formatAbsoluteDate(start)} → ${LedgeTextFormatter.formatAbsoluteDate(end)}"
+            "Month • ${LedgeTextFormatter.formatAbsoluteDate(start)} → ${
+                LedgeTextFormatter.formatAbsoluteDate(
+                    end
+                )
+            }"
         }
+
         DashboardPeriod.CUSTOM -> {
             val from = periodFilter.from ?: 0L
             val to = periodFilter.to ?: 0L
-            "Custom • ${LedgeTextFormatter.formatAbsoluteDate(from)} → ${LedgeTextFormatter.formatAbsoluteDate(to)}"
+            "Custom • ${LedgeTextFormatter.formatAbsoluteDate(from)} → ${
+                LedgeTextFormatter.formatAbsoluteDate(
+                    to
+                )
+            }"
         }
     }
 }

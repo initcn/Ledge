@@ -2,14 +2,19 @@ package com.ledge.ui.settings
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
@@ -30,6 +35,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ledge.core.CurrencyType
 import com.ledge.ui.components.core.LedgeCard
+import com.ledge.ui.components.core.LedgeCardVariant
 import com.ledge.ui.components.core.LedgeScaffold
 import com.ledge.ui.components.core.LedgeScreenTitle
 import com.ledge.ui.theme.LedgeTheme
@@ -46,7 +52,6 @@ fun SettingsScreen(
     val coroutineScope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState() }
 
-    // FILE SYSTEM EXTRACTION ACTIONS (BACKUP EXPORT/IMPORT CONTRACTS)
     val exportLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/json")
     ) { uri ->
@@ -66,7 +71,8 @@ fun SettingsScreen(
         contract = ActivityResultContracts.OpenDocument()
     ) { uri ->
         uri?.let {
-            val json = context.contentResolver.openInputStream(it)?.bufferedReader()?.readText() ?: return@let
+            val json = context.contentResolver.openInputStream(it)?.bufferedReader()?.readText()
+                ?: return@let
             viewModel.restoreBackup(json)
             coroutineScope.launch {
                 snackBarHostState.showSnackbar("Backup restored")
@@ -74,13 +80,14 @@ fun SettingsScreen(
         }
     }
 
-    // CENTRALIZED SCAFFOLDING - Replaces structural scaffold boilerplate
     LedgeScaffold(snackbarHostState = snackBarHostState) { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(horizontal = 12.dp),
+            // 🔥 FIX: Generous bottom padding bounds ensures structural navbars don't clip your content fields
+            contentPadding = PaddingValues(top = 12.dp, bottom = 88.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item {
@@ -95,6 +102,7 @@ fun SettingsScreen(
             item {
                 LedgeCard(
                     modifier = Modifier.fillMaxWidth(),
+                    variant = LedgeCardVariant.LIST_ITEM,
                     containerColor = LedgeTheme.surfaces.surfaceHigh
                 ) {
                     SettingsSwitchRow(
@@ -110,10 +118,48 @@ fun SettingsScreen(
                 }
             }
 
+            // 🔥 FIX: Conditional slide layout block for budget configurations
+            item {
+                AnimatedVisibility(
+                    visible = uiState.budgetMode,
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut() + shrinkVertically()
+                ) {
+                    LedgeCard(
+                        modifier = Modifier.fillMaxWidth(),
+                        variant = LedgeCardVariant.LIST_ITEM,
+                        containerColor = LedgeTheme.surfaces.surfaceHigh
+                    ) {
+                        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            Text(
+                                text = "Budget Settings",
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(
+                                text = "Configure monthly spending budgets for categories.",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.textSecondary
+                            )
+                            FilledTonalButton(
+                                modifier = Modifier.fillMaxWidth(),
+                                onClick = { onOpenBudgetSettings() },
+                                shape = MaterialTheme.shapes.small,
+                                colors = ButtonDefaults.filledTonalButtonColors(
+                                    containerColor = LedgeTheme.surfaces.surfaceHighest
+                                )
+                            ) {
+                                Text("Manage Budgets")
+                            }
+                        }
+                    }
+                }
+            }
+
             // DEBT INTEREST INTEGRATION SWITCH BLOCK
             item {
                 LedgeCard(
                     modifier = Modifier.fillMaxWidth(),
+                    variant = LedgeCardVariant.LIST_ITEM,
                     containerColor = LedgeTheme.surfaces.surfaceHigh
                 ) {
                     SettingsSwitchRow(
@@ -125,40 +171,11 @@ fun SettingsScreen(
                 }
             }
 
-            // REDIRECT MANAGEMENT ACTION BLOCK
-            item {
-                LedgeCard(
-                    modifier = Modifier.fillMaxWidth(),
-                    containerColor = LedgeTheme.surfaces.surfaceHigh
-                ) {
-                    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Text(
-                            text = "Budget Settings",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Text(
-                            text = "Configure monthly spending budgets for categories.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.textSecondary
-                        )
-                        FilledTonalButton(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = { onOpenBudgetSettings() },
-                            shape = RoundedCornerShape(14.dp),
-                            colors = ButtonDefaults.filledTonalButtonColors(
-                                containerColor = LedgeTheme.surfaces.surfaceHighest
-                            )
-                        ) {
-                            Text("Manage Budgets")
-                        }
-                    }
-                }
-            }
-
             // SELECTION CURRENCY ROW BLOCK
             item {
                 LedgeCard(
                     modifier = Modifier.fillMaxWidth(),
+                    variant = LedgeCardVariant.LIST_ITEM,
                     containerColor = LedgeTheme.surfaces.surfaceHigh
                 ) {
                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -174,7 +191,7 @@ fun SettingsScreen(
                                 val selected = uiState.currency == type
                                 FilledTonalButton(
                                     onClick = { viewModel.setCurrency(type) },
-                                    shape = RoundedCornerShape(14.dp),
+                                    shape = MaterialTheme.shapes.small,
                                     colors = ButtonDefaults.filledTonalButtonColors(
                                         containerColor = if (selected) LedgeTheme.surfaces.surfaceHighest else LedgeTheme.surfaces.surface,
                                         contentColor = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
@@ -184,11 +201,6 @@ fun SettingsScreen(
                                 }
                             }
                         }
-                        Text(
-                            text = "Current: ${uiState.currency.name}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )
                     }
                 }
             }
@@ -197,6 +209,7 @@ fun SettingsScreen(
             item {
                 LedgeCard(
                     modifier = Modifier.fillMaxWidth(),
+                    variant = LedgeCardVariant.LIST_ITEM,
                     containerColor = LedgeTheme.surfaces.surfaceHigh
                 ) {
                     SettingsSwitchRow(
@@ -212,6 +225,7 @@ fun SettingsScreen(
             item {
                 LedgeCard(
                     modifier = Modifier.fillMaxWidth(),
+                    variant = LedgeCardVariant.LIST_ITEM,
                     containerColor = LedgeTheme.surfaces.surfaceHigh
                 ) {
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -224,22 +238,28 @@ fun SettingsScreen(
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.textSecondary
                         )
-                        Button(
+                        // 🔥 FIX: Compact Side-By-Side Button Alignment Row
+                        Row(
                             modifier = Modifier.fillMaxWidth(),
-                            onClick = { exportLauncher.launch("ledge_backup.json") },
-                            shape = RoundedCornerShape(14.dp)
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text("Export Backup")
-                        }
-                        FilledTonalButton(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = { importLauncher.launch(arrayOf("application/json")) },
-                            shape = RoundedCornerShape(14.dp),
-                            colors = ButtonDefaults.filledTonalButtonColors(
-                                containerColor = LedgeTheme.surfaces.surfaceHighest
-                            )
-                        ) {
-                            Text("Restore Backup")
+                            Button(
+                                modifier = Modifier.weight(1f),
+                                onClick = { exportLauncher.launch("ledge_backup.json") },
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                Text("Export")
+                            }
+                            FilledTonalButton(
+                                modifier = Modifier.weight(1f),
+                                onClick = { importLauncher.launch(arrayOf("application/json")) },
+                                shape = MaterialTheme.shapes.small,
+                                colors = ButtonDefaults.filledTonalButtonColors(
+                                    containerColor = LedgeTheme.surfaces.surfaceHighest
+                                )
+                            ) {
+                                Text("Restore")
+                            }
                         }
                     }
                 }
@@ -253,6 +273,7 @@ fun SettingsScreen(
             item {
                 LedgeCard(
                     modifier = Modifier.fillMaxWidth(),
+                    variant = LedgeCardVariant.LIST_ITEM,
                     containerColor = LedgeTheme.surfaces.surfaceHigh
                 ) {
                     SettingsInfoRow(

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ledge.ui.components.core.LedgeCard
+import com.ledge.ui.components.core.LedgeCardVariant
 import com.ledge.ui.components.model.TransactionRowData
 import com.ledge.ui.theme.LedgeTheme
 import com.ledge.ui.theme.expense
@@ -30,8 +30,8 @@ fun TransactionCard(
 
     LedgeCard(
         modifier = Modifier.fillMaxWidth(),
-        containerColor = LedgeTheme.surfaces.surfaceHigh, // <-- UPDATED TO THE MODERN HIGHER SURFACE SPEC
-        shape = RoundedCornerShape(30.dp), // <-- ALIGNED WITH BUDGETOVERVIEW 30DP CORNERS
+        variant = LedgeCardVariant.LIST_ITEM,
+        containerColor = LedgeTheme.surfaces.surfaceHigh,
         elevation = 1.dp
     ) {
         Row(
@@ -40,11 +40,7 @@ fun TransactionCard(
                 .padding(20.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            /*
-            ---------------------------------------------------
-            LEFT SIDE INFO - TYPOGRAPHY SPEC SYNC
-            ---------------------------------------------------
-            */
+            // LEFT SIDE INFO - TYPOGRAPHY SPEC SYNC
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(6.dp)
@@ -57,13 +53,13 @@ fun TransactionCard(
                 Text(
                     text = transaction.subtitle,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant // <-- REMOVED STALE CUSTOM EXTENSION Fallback
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 Text(
                     text = transaction.formattedDate,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant // <-- REPLACED WITH SYSTEM TOKEN
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 if (transaction.note.isNotBlank()) {
@@ -77,11 +73,7 @@ fun TransactionCard(
                 }
             }
 
-            /*
-            ---------------------------------------------------
-            RIGHT SIDE AMOUNT DISPLAY
-            ---------------------------------------------------
-            */
+            // RIGHT SIDE AMOUNT DISPLAY
             Text(
                 text = transaction.formattedAmount,
                 style = MaterialTheme.typography.titleMedium,

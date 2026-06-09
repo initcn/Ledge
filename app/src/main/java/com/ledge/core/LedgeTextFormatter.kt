@@ -13,14 +13,10 @@ object LedgeTextFormatter {
     private val zoneId = ZoneId.systemDefault()
     private val absoluteDateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
 
-    /*
-    ---------------------------------------------------
-    1. RAW CURRENCY FORMATTING
-    ---------------------------------------------------
-    */
+
+    // RAW CURRENCY FORMATTING
     fun formatCurrency(
-        amount: Long,
-        currency: CurrencyType = CurrencyType.INR
+        amount: Long, currency: CurrencyType = CurrencyType.INR
     ): String {
         val locale = when (currency) {
             CurrencyType.INR -> Locale.Builder().setLanguage("en").setRegion("IN").build()
@@ -33,15 +29,10 @@ object LedgeTextFormatter {
         return formatter.format(amount / 100.0)
     }
 
-    /*
-    ---------------------------------------------------
-    2. TRANSACTION AMOUNT WITH PREFIX SIGN SIGNALS
-    ---------------------------------------------------
-    */
+
+    // TRANSACTION AMOUNT WITH PREFIX SIGN SIGNALS
     fun formatTransactionAmount(
-        type: TransactionType,
-        amount: Long,
-        currency: CurrencyType
+        type: TransactionType, amount: Long, currency: CurrencyType
     ): String {
         val formattedAmount = formatCurrency(amount = amount, currency = currency)
         return if (type == TransactionType.DEBIT) {
@@ -51,11 +42,7 @@ object LedgeTextFormatter {
         }
     }
 
-    /*
-    ---------------------------------------------------
-    3. RELATIVE & ABSOLUTE TIMELINE FORMATTING
-    ---------------------------------------------------
-    */
+    // RELATIVE & ABSOLUTE TIMELINE FORMATTING
     fun formatRelativeDate(timestamp: Long): String {
         val now = Instant.now()
         val instant = Instant.ofEpochMilli(timestamp)
@@ -71,9 +58,7 @@ object LedgeTextFormatter {
     }
 
     fun formatAbsoluteDate(timestamp: Long): String {
-        return Instant.ofEpochMilli(timestamp)
-            .atZone(zoneId)
-            .toLocalDate()
+        return Instant.ofEpochMilli(timestamp).atZone(zoneId).toLocalDate()
             .format(absoluteDateFormatter)
     }
 }

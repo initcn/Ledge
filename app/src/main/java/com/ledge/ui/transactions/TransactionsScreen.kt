@@ -27,7 +27,7 @@ import com.ledge.ui.settings.SettingsViewModel
 
 @Composable
 fun TransactionsScreen(
-    paddingValues: PaddingValues, // 🔔 UPDATED: Receives floating navigation padding instructions from parent AppNavigation
+    paddingValues: PaddingValues,
     viewModel: TransactionsViewModel = hiltViewModel(),
     settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
@@ -37,12 +37,11 @@ fun TransactionsScreen(
     val pagingItems = viewModel.pagedTransactions.collectAsLazyPagingItems()
     val currency = settingsUiState.currency
 
-    // CENTRALIZED SCAFFOLDING - Enforcing unified background and snackbar tracking
-    LedgeScaffold { _ -> // 🔔 UPDATED: Ignore internal padding since we pass top-level navigation constraints directly
+    LedgeScaffold { _ ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues) // 🔔 UPDATED: Ensures last items can scroll clear of the floating bar boundary
+                .padding(paddingValues)
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -82,11 +81,8 @@ fun TransactionsScreen(
         }
     }
 
-    /*
-    ---------------------------------------------------
-    MODAL INTERACTION OVERLAYS (SHEETS & DIALOGS)
-    ---------------------------------------------------
-    */
+
+    // MODAL INTERACTION OVERLAYS (SHEETS & DIALOGS)
 
     // TRANSACTION EDIT SHEET
     uiState.selectedTransaction?.let { transaction ->

@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
@@ -22,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.ledge.core.toRowData
 import com.ledge.core.CurrencyType
+import com.ledge.core.toRowData
 import com.ledge.data.entity.TransactionEntity
 import com.ledge.ui.components.cards.TransactionCard
 import com.ledge.ui.theme.LedgeTheme
@@ -227,9 +226,7 @@ private fun SwipeBackground(
 
             .fillMaxSize()
 
-            .clip(
-                RoundedCornerShape(28.dp)
-            )
+            .clip(MaterialTheme.shapes.large)
 
             .background(
                 backgroundColor

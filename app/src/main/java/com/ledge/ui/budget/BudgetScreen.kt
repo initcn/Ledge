@@ -65,10 +65,7 @@ fun BudgetScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item {
-                Column(
-                    modifier = Modifier.padding(top = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     LedgeScreenTitle(title = "Budgets")
                     Text(
                         text = "Monthly category spending limits",
@@ -89,7 +86,8 @@ fun BudgetScreen(
                     amount = if (uiState.category == category) {
                         uiState.amount
                     } else {
-                        budget?.budgetAmount?.toInt()?.toString() ?: ""
+                        budget?.let { (it.budgetAmount / 100.0).toString().removeSuffix(".0") }
+                            ?: ""
                     },
                     amountError = if (uiState.category == category) {
                         uiState.amountError
@@ -161,7 +159,11 @@ private fun BudgetInputCard(
 
                     progress?.let {
                         Text(
-                            text = "${LedgeTextFormatter.formatCurrency(it.spentAmount)} / ${LedgeTextFormatter.formatCurrency(it.budgetAmount)}",
+                            text = "${LedgeTextFormatter.formatCurrency(it.spentAmount)} / ${
+                                LedgeTextFormatter.formatCurrency(
+                                    it.budgetAmount
+                                )
+                            }",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

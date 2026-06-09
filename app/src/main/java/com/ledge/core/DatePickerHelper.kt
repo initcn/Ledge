@@ -13,8 +13,7 @@ object DatePickerHelper {
         onDateSelected: (Long) -> Unit
     ) {
 
-        val calendar =
-            Calendar.getInstance()
+        val calendar = Calendar.getInstance()
 
         DatePickerDialog(
 
@@ -22,17 +21,11 @@ object DatePickerHelper {
 
             { _, year, month, day ->
 
-                val selectedDate =
-                    Calendar.getInstance()
+                val selectedDate = Calendar.getInstance()
 
                 selectedDate.set(
 
-                    year,
-                    month,
-                    day,
-                    0,
-                    0,
-                    0
+                    year, month, day, 0, 0, 0
                 )
 
                 onDateSelected(

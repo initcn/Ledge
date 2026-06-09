@@ -16,15 +16,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ledge.core.DashboardPeriod
+import com.ledge.core.TransactionType
 import com.ledge.core.buildReportHtml
 import com.ledge.core.printReport
 import com.ledge.core.toRowData
-import com.ledge.core.DashboardPeriod
-import com.ledge.core.TransactionType
 import com.ledge.ui.components.core.LedgeScaffold
 import com.ledge.ui.components.core.LedgeScreenTitle
 import com.ledge.ui.settings.SettingsViewModel
 
+/**
+ * ReportsScreen renders an analytical history view of transactions.
+ * It provides multi-select filtering logic across categories, timespans, and transaction types,
+ * alongside printing components to export generated HTML tables natively.
+ *
+ * @param paddingValues Safe window padding boundaries passed down from the AppNavigation Scaffold shell.
+ */
 @Composable
 fun ReportsScreen(
     paddingValues: PaddingValues,
@@ -33,22 +40,19 @@ fun ReportsScreen(
 ) {
     val context = LocalContext.current
 
+    // Observe flows reactively wrapped to tie directly to the lifecycle states
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val settingsUiState by settingsViewModel.uiState.collectAsStateWithLifecycle()
     val currency = settingsUiState.currency
 
-    // Resolve Category Filters dynamically based on Type State
+    // NOTE: Dynamic Filter Resolution. Merges categories conditionally based on selected transaction type.
     val currentCategories = when (uiState.selectedType) {
         TransactionType.DEBIT -> viewModel.categories.debit
         TransactionType.CREDIT -> viewModel.categories.credit
         else -> viewModel.categories.debit + viewModel.categories.credit
     }
 
-    /*
-    ---------------------------------------------------
-    REPORT DATE RANGE CALCULATIONS
-    ---------------------------------------------------
-    */
+    // NOTE: Date bounds calculations. Evaluates historical transaction timelines to safely format printing bounds.
     val reportFromDate = if (uiState.periodFilter.period == DashboardPeriod.CUSTOM) {
         uiState.periodFilter.from ?: System.currentTimeMillis()
     } else {
@@ -61,31 +65,26 @@ fun ReportsScreen(
         uiState.transactions.maxOfOrNull { it.createdAt } ?: System.currentTimeMillis()
     }
 
-    // Transform entities to formatted row displays
+    // Performance Optimization: Cache converted presentation rows to eliminate computational sorting re-renders
     val transactionRows = remember(uiState.transactions, currency) {
         uiState.transactions.map { it.toRowData(currency) }
     }
 
-    /*
-    ---------------------------------------------------
-    UI LAYOUT
-    ---------------------------------------------------
-    */
     LedgeScaffold { _ ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues) // ✅ FIX: Safely handles top status bar bounds to match Dashboard/Transactions layout
-                .padding(horizontal = 16.dp), // ✅ Aligns screen margins consistently
-            contentPadding = PaddingValues(vertical = 16.dp), // ✅ Balanced list spacing
+                .padding(paddingValues) // Prevents content clipping under the top status/action bar layers
+                .padding(horizontal = 16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            // SCREEN TITLE
+            // SECTION 1: Screen Header
             item {
                 LedgeScreenTitle(title = "Reports")
             }
 
-            // FILTER FLOW ROWS
+            // SECTION 2: Dynamic Granular Category, Type, and Time Filter Trays
             item {
                 ReportsFilters(
                     selectedType = uiState.selectedType,
@@ -98,7 +97,7 @@ fun ReportsScreen(
                 )
             }
 
-            // SUMMARY CARD
+            // SECTION 3: Summary Metric Card (Credit, Debit, and Balance totals)
             item {
                 ReportsSummary(
                     transactionCount = uiState.transactions.size,
@@ -111,11 +110,12 @@ fun ReportsScreen(
                 )
             }
 
-            // PRINT ACTION BUTTON
+            // SECTION 4: Native Android Printing Export Trigger
             item {
                 Button(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
+                        // Triggers raw HTML configuration engine strings passing down target filters and transaction items
                         val html = buildReportHtml(
                             transactions = uiState.transactions,
                             totalDebit = uiState.totalDebit,
@@ -131,7 +131,7 @@ fun ReportsScreen(
                 }
             }
 
-            // FILTERED TRANSACTION LIST
+            // SECTION 5: Filtered Transaction History Rows Feed
             reportsTransactionList(transactions = transactionRows)
         }
     }

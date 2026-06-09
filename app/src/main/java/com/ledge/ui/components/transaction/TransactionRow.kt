@@ -23,11 +23,7 @@ fun TransactionRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            /*
-            ---------------------------------------------------
-            LEFT SIDE INFO
-            ---------------------------------------------------
-            */
+            // LEFT SIDE INFO
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = transaction.title,
@@ -52,12 +48,7 @@ fun TransactionRow(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-
-            /*
-            ---------------------------------------------------
-            RIGHT SIDE AMOUNT SIGNALS
-            ---------------------------------------------------
-            */
+            // RIGHT SIDE AMOUNT SIGNALS
             Text(
                 text = transaction.formattedAmount,
                 style = MaterialTheme.typography.titleMedium,

@@ -20,10 +20,11 @@ import com.ledge.core.LedgeTextFormatter
 import com.ledge.data.entity.CategoryTotal
 import com.ledge.data.repository.BudgetProgress
 import com.ledge.ui.components.core.LedgeCard
+import com.ledge.ui.components.core.LedgeCardVariant
+import com.ledge.ui.theme.LedgeTheme
 import com.ledge.ui.theme.expense
 import com.ledge.ui.theme.income
 import com.ledge.ui.theme.textSecondary
-import com.ledge.ui.theme.LedgeTheme
 
 @Composable
 fun BalanceCard(
@@ -33,8 +34,8 @@ fun BalanceCard(
 ) {
     LedgeCard(
         modifier = Modifier.fillMaxWidth(),
+        variant = LedgeCardVariant.DASHBOARD_CONTAINER,
         containerColor = LedgeTheme.surfaces.surfaceHighest,
-        shape = RoundedCornerShape(32.dp),
         elevation = 2.dp
     ) {
         Column(
@@ -81,8 +82,8 @@ fun BudgetOverviewCard(
 ) {
     LedgeCard(
         modifier = Modifier.fillMaxWidth(),
+        variant = LedgeCardVariant.DASHBOARD_CONTAINER,
         containerColor = LedgeTheme.surfaces.surfaceHigh,
-        shape = RoundedCornerShape(30.dp),
         elevation = 1.dp
     ) {
         Column(
@@ -109,7 +110,11 @@ fun BudgetOverviewCard(
                     ) {
                         Text(text = budget.category)
                         Text(
-                            text = "${LedgeTextFormatter.formatCurrency(budget.spentAmount)} / ${LedgeTextFormatter.formatCurrency(budget.budgetAmount)}",
+                            text = "${LedgeTextFormatter.formatCurrency(budget.spentAmount)} / ${
+                                LedgeTextFormatter.formatCurrency(
+                                    budget.budgetAmount
+                                )
+                            }",
                             color = progressColor
                         )
                     }
@@ -144,8 +149,8 @@ fun CategorySpendingCard(
 
     LedgeCard(
         modifier = Modifier.fillMaxWidth(),
+        variant = LedgeCardVariant.DASHBOARD_CONTAINER,
         containerColor = LedgeTheme.surfaces.surfaceHigh,
-        shape = RoundedCornerShape(30.dp),
         elevation = 1.dp
     ) {
         Column(
@@ -211,8 +216,8 @@ fun DebtCard(
 ) {
     LedgeCard(
         modifier = Modifier.fillMaxWidth(),
+        variant = LedgeCardVariant.DASHBOARD_CONTAINER,
         containerColor = LedgeTheme.surfaces.surfaceHigh,
-        shape = RoundedCornerShape(30.dp),
         elevation = 1.dp
     ) {
         Column(
@@ -245,8 +250,8 @@ fun LendingCard(
 ) {
     LedgeCard(
         modifier = Modifier.fillMaxWidth(),
+        variant = LedgeCardVariant.DASHBOARD_CONTAINER,
         containerColor = LedgeTheme.surfaces.surfaceHigh,
-        shape = RoundedCornerShape(30.dp),
         elevation = 1.dp
     ) {
         Column(

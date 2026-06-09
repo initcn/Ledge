@@ -1,7 +1,7 @@
 package com.ledge.di
 
 import com.ledge.data.provider.AssetCategoryProvider
-import com.ledge.domain.CategoryProvider // <-- FIXED IMPORT
+import com.ledge.domain.CategoryProvider
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
