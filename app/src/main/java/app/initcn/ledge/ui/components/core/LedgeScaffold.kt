@@ -1,8 +1,6 @@
 package app.initcn.ledge.ui.components.core
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -19,7 +17,6 @@ fun LedgeScaffold(
 ) {
     Scaffold(
         containerColor = LedgeTheme.surfaces.background,
-        contentWindowInsets = WindowInsets.navigationBars,
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState,
