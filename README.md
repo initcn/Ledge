@@ -4,6 +4,20 @@ Ledge is a modern Android expense tracking application built with Kotlin, Jetpac
 
 It helps users manage income, expenses, debt, lending, budgets, reports, and financial analytics with a clean Material 3 UI.
 
+<p align="center">
+  <img src="./screenshot/Screenshot_20260609_115900.png" width="140">
+  &nbsp;&nbsp;
+   <img src="./screenshot/Screenshot_20260609_120127.png" width="140">
+  &nbsp;&nbsp;
+ <img src="./screenshot/Screenshot_20260609_120142.png" width="140">
+ &nbsp;&nbsp;
+ <img src="./screenshot/Screenshot_20260609_120152.png" width="140">
+ &nbsp;&nbsp;
+ <img src="./screenshot/Screenshot_20260609_120202.png" width="140">
+</p>
+
+[Download](./app/release/app-release.apk)
+
 ## Features
 
 * Income and expense tracking
